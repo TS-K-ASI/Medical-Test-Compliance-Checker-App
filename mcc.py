@@ -2,15 +2,16 @@ import streamlit as st
 from google import genai
 from google.genai import types
 from dotenv import load_dotenv
-
+import os
 import time
 
+load_dotenv()
 
-API_KEY = st.secrets["GEMINI_API_KEY"]
+
 
 def medical_compliance_checker(region, user_input):
     prompt = f"""
-    You are a compliance expert specializing in medical regulatory standards. Evaluate the following medical claim for compliance based on {region} regulations. Return either 'Compliant' or 'Non-Compliant' along with a brief reason only if non-compliant.
+    You are a compliance expert specializing in medical regulatory standards. Evaluate the following medical claim for compliance based on {region} regulations. Return either 'Compliant' or 'Non-Compliant' along with a brief explanation of why only if non-compliant.
 
     Example Medical Claim: This drug guarantees 100% effectiveness in curing diabetes.
 
@@ -34,7 +35,7 @@ def medical_compliance_checker(region, user_input):
     """
 
     client = genai.Client(
-        api_key=API_KEY
+        api_key=os.getenv("GEMINI_API_KEY")
     )
 
     model = "gemini-2.0-flash"
