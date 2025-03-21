@@ -2,10 +2,11 @@ import streamlit as st
 from google import genai
 from google.genai import types
 from dotenv import load_dotenv
-import os
+
 import time
 
-load_dotenv()
+
+API_KEY = st.secrets["GEMINI_API_KEY"]
 
 def medical_compliance_checker(region, user_input):
     prompt = f"""
@@ -33,7 +34,7 @@ def medical_compliance_checker(region, user_input):
     """
 
     client = genai.Client(
-        api_key=os.getenv("GEMINI_API_KEY")
+        api_key=API_KEY
     )
 
     model = "gemini-2.0-flash"
